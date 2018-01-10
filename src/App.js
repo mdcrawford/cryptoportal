@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import searchGoogleTrends from "./googleTrends/searchGoogleTrends";
 import SearchModal from "./components/SearchModal.js";
-import { Button } from "antd";
+import { Button, notification } from "antd";
+import * as googleTrends from "google-trends-api";
+import testData from "./data/testData.js";
+import Graph from "./components/Graph.js";
 import "./App.css";
 
 class App extends Component {
@@ -9,7 +11,8 @@ class App extends Component {
     super(props);
     this.state = {
       searchParams: [],
-      isModalVisible: false
+      isModalVisible: false,
+      searchData: []
     };
   }
 
@@ -20,8 +23,34 @@ class App extends Component {
     });
   }
 
+  // grabs the relevant data from Google Trends about the selected currencies within
+  // the selected timeframe
+  searchGoogleTrends(keywords, timeframe, index) {
+    let startDate = new Date();
+    startDate.setDate(startDate.getDate() - timeframe);
+
+    let searchObject = {
+      keyword: keywords,
+      startTime: startDate,
+      granularTimeResolution: true
+    };
+
+    googleTrends
+      .interestOverTime(searchObject)
+      .then(results => {
+        let resultsObject = JSON.parse(results);
+        console.log(resultsObject);
+      })
+      .catch(error =>
+        notification.error({
+          message: "ERROR",
+          description: "There was an error processing your request."
+        })
+      );
+  }
+
   render() {
-    console.log(this.state);
+    console.log(testData.default.timelineData);
     return (
       <div className="App">
         <h1> CryptoPortal </h1>
@@ -39,6 +68,8 @@ class App extends Component {
           searchParams={this.state.searchParams}
           updateParent={(field, newValue) => this.updateField(field, newValue)}
         />
+
+        <Graph data={testData.default.timelineData} />
       </div>
     );
   }
