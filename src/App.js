@@ -1,18 +1,44 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import searchGoogleTrends from "./googleTrends/searchGoogleTrends";
+import SearchModal from "./components/SearchModal.js";
+import { Button } from "antd";
+import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchParams: [],
+      isModalVisible: false
+    };
+  }
+
+  updateField(field, newValue) {
+    this.setState({
+      ...this.state,
+      [field]: newValue
+    });
+  }
+
   render() {
+    console.log(this.state);
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1> CryptoPortal </h1>
+        <Button
+          type="primary"
+          icon="plus"
+          onClick={() => this.updateField("isModalVisible", true)}
+        >
+          {" "}
+          Add New Graph(s){" "}
+        </Button>
+
+        <SearchModal
+          isVisible={this.state.isModalVisible}
+          searchParams={this.state.searchParams}
+          updateParent={(field, newValue) => this.updateField(field, newValue)}
+        />
       </div>
     );
   }
