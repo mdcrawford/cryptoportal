@@ -55,10 +55,10 @@ export default class SearchModal extends Component {
   }
 
   render() {
-    const currencyOptions = currencies.map(cur => {
+    const currencyOptions = Object.keys(currencies).map(curName => {
       return (
-        <Select.Option key={cur} value={cur}>
-          {cur}
+        <Select.Option key={curName} value={curName}>
+          {curName}
         </Select.Option>
       );
     });
