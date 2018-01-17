@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory";
 import { notification } from "antd";
 import axios from "axios";
+import currencies from "../data/currencies.js";
 import * as googleTrends from "google-trends-api";
 
 /* PROPS
@@ -32,13 +33,20 @@ export default class Graph extends Component {
   // grabs the relevant data from Google Trends about the selected currencies within
   // the selected timeframe
   searchGoogleTrends(keyword, timeframe) {
+    // alberto requested it search for "BTC Coin" or "ETH Coin" instead of "Bitcoin" or
+    // "Ethereum", so here we grab that abbreviation
+    let abbrev = currencies[keyword];
+    abbrev = abbrev + "%20Coin";
+
+    // make the call to our Google Cloud Function
+    let url =
+      "https://us-central1-crypto-server.cloudfunctions.net/trendsGET?keyword=" +
+      abbrev +
+      "&timeframe=" +
+      timeframe;
+
     axios
-      .get(
-        "https://us-central1-crypto-server.cloudfunctions.net/trendsGET?keyword=" +
-          keyword +
-          "&timeframe=" +
-          timeframe
-      )
+      .get(url)
       .then(result => {
         this.setState({
           ...this.state,
