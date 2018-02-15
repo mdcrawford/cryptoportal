@@ -9,6 +9,7 @@ import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import firebase from "./configs/firebaseConfig";
 import Header from "./components/Header.js";
+import AddCoin from "./pages/AddCoin.js";
 import "./App.css";
 
 class App extends Component {
@@ -37,7 +38,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     let loginStatus = this.state.userInfo ? true : false;
     return (
       <div>
@@ -51,6 +51,7 @@ class App extends Component {
                 path="/viewgraphs"
                 component={() => <ViewGraphs />}
               />
+              <Route exact path="/addcoin" component={() => <AddCoin />} />
             </Switch>
           </div>
         </BrowserRouter>
