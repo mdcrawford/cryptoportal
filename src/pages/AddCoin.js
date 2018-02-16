@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Input } from "antd";
+import { Input, Button } from "antd";
+import addCoin from "../firebase/addCoin";
 
 export default class AddCoin extends Component {
   constructor(props) {
@@ -15,6 +16,14 @@ export default class AddCoin extends Component {
       ...this.state,
       [field]: value
     });
+  }
+
+  onSubmitCoin() {
+    if (this.state.coinName && this.state.coinAbbrev) {
+      addCoin(this.state.coinName, this.state.coinAbbrev);
+    } else {
+      alert("Please fill out both the coin name and the coin abbreviation.");
+    }
   }
 
   render() {
@@ -37,6 +46,10 @@ export default class AddCoin extends Component {
           onChange={e => this.onChange("coinAbbrev", e.target.value)}
           placeholder="Coin Abbreviation"
         />
+
+        <br />
+
+        <Button onClick={() => this.onSubmitCoin()}> + Add Coin </Button>
       </div>
     );
   }
