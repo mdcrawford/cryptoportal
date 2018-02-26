@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Input, Button } from "antd";
+import { Redirect } from "react-router";
 import loginToFirebase from "../firebase/loginToFirebase.js";
 
 export default class Login extends Component {
@@ -19,6 +20,10 @@ export default class Login extends Component {
   }
 
   render() {
+    if (this.props.userInfo) {
+      return <Redirect to="/viewgraphs" />;
+    }
+
     return (
       <div>
         <Input

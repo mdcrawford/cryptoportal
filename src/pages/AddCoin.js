@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Input, Button } from "antd";
+import { Redirect } from "react-router";
 import addCoin from "../firebase/addCoin";
 
 export default class AddCoin extends Component {
@@ -27,6 +28,10 @@ export default class AddCoin extends Component {
   }
 
   render() {
+    if (!this.props.userInfo) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div>
         <p> Coin Name </p>

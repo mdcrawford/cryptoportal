@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchModal from "../components/SearchModal.js";
 import { Button, notification } from "antd";
+import { Redirect } from "react-router";
 import Graph from "../components/Graph.js";
 import firebase from "../configs/firebaseConfig";
 
@@ -34,10 +35,14 @@ export default class ViewGraphs extends Component {
   }
 
   render() {
+    if (!this.props.userInfo) {
+      return <Redirect to="/" />;
+    }
+
     const graphs = this.state.searchParams.map(param => {
       return <Graph searchParams={param} currencies={this.state.currencies} />;
     });
-    console.log(this.state);
+
     return (
       <div className="App">
         <h1> CryptoPortal </h1>

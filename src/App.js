@@ -45,13 +45,21 @@ class App extends Component {
           <div>
             <Header isLoggedIn={loginStatus} />
             <Switch>
-              <Route exact path="/" component={() => <Login />} />
+              <Route
+                exact
+                path="/"
+                component={() => <Login userInfo={this.state.userInfo} />}
+              />
               <Route
                 exact
                 path="/viewgraphs"
-                component={() => <ViewGraphs />}
+                component={() => <ViewGraphs userInfo={this.state.userInfo} />}
               />
-              <Route exact path="/addcoin" component={() => <AddCoin />} />
+              <Route
+                exact
+                path="/addcoin"
+                component={() => <AddCoin userInfo={this.state.userInfo} />}
+              />
             </Switch>
           </div>
         </BrowserRouter>

@@ -44,7 +44,6 @@ export default class Graph extends Component {
       abbrev +
       "&timeframe=" +
       timeframe;
-    console.log(url);
 
     axios
       .get(url)
