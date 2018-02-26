@@ -26,6 +26,7 @@ export default class Login extends Component {
 
     return (
       <div>
+        <h1> CryptoPortal </h1>
         <Input
           value={this.state.email}
           onChange={e => this.onInputChange("email", e.target.value)}
@@ -41,6 +42,9 @@ export default class Login extends Component {
           type="password"
           style={{ width: 250 }}
           placeholder="Password"
+          onPressEnter={() =>
+            loginToFirebase(this.state.email, this.state.password)
+          }
         />
 
         <br />
