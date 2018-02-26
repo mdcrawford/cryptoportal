@@ -25,6 +25,10 @@ export default class Header extends Component {
           </Menu.Item>
 
           <Menu.Item>
+            <Link to="/changepassword"> Change Password </Link>
+          </Menu.Item>
+
+          <Menu.Item>
             {this.props.isLoggedIn && (
               <Button onClick={() => signOutFirebase()}> Sign Out </Button>
             )}

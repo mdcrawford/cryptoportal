@@ -5,6 +5,7 @@ import testData from "./data/testData.js";
 import Graph from "./components/Graph.js";
 import Login from "./pages/Login.js";
 import ViewGraphs from "./pages/ViewGraphs.js";
+import ChangePassword from "./pages/ChangePassword";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import firebase from "./configs/firebaseConfig";
@@ -59,6 +60,13 @@ class App extends Component {
                 exact
                 path="/addcoin"
                 component={() => <AddCoin userInfo={this.state.userInfo} />}
+              />
+              <Route
+                exact
+                path="/changepassword"
+                component={() => (
+                  <ChangePassword userInfo={this.state.userInfo} />
+                )}
               />
             </Switch>
           </div>
