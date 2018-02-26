@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Modal, Select, Button } from "antd";
-import currencies from "../data/currencies.js";
+import firebase from "../configs/firebaseConfig";
 
 /* PROPS
   searchParams: [obj], each has field "currency" and "timeframe"
   updateParent: function, updates the state back in App.js as we add/remove
     search parameters
   isVisible: boolean, whether or not the Modal is being displayed
+  currencies: object, all the possible currencies pulled from firebase
 */
 
 /* STATE
@@ -55,7 +56,7 @@ export default class SearchModal extends Component {
   }
 
   render() {
-    const currencyOptions = Object.keys(currencies).map(curName => {
+    const currencyOptions = Object.keys(this.props.currencies).map(curName => {
       return (
         <Select.Option key={curName} value={curName}>
           {curName}

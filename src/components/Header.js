@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button } from "antd";
+import { Button, Menu, Icon } from "antd";
+import { Link } from "react-router-dom";
 import signOutFirebase from "../firebase/signOutFirebase.js";
 
 /* PROPS
@@ -8,11 +9,27 @@ import signOutFirebase from "../firebase/signOutFirebase.js";
 
 export default class Header extends Component {
   render() {
+    if (!this.props.isLoggedIn) {
+      return <div />;
+    }
+
     return (
       <div>
-        {this.props.isLoggedIn && (
-          <Button onClick={() => signOutFirebase()}> Sign Out </Button>
-        )}
+        <Menu mode="horizontal">
+          <Menu.Item>
+            <Link to="/viewgraphs"> View Graphs </Link>
+          </Menu.Item>
+
+          <Menu.Item>
+            <Link to="/addcoin">Add Coin</Link>
+          </Menu.Item>
+
+          <Menu.Item>
+            {this.props.isLoggedIn && (
+              <Button onClick={() => signOutFirebase()}> Sign Out </Button>
+            )}
+          </Menu.Item>
+        </Menu>
       </div>
     );
   }

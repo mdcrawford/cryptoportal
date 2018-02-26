@@ -1,15 +1,30 @@
 import React, { Component } from "react";
 import SearchModal from "../components/SearchModal.js";
 import { Button, notification } from "antd";
+import { Redirect } from "react-router";
 import Graph from "../components/Graph.js";
+import firebase from "../configs/firebaseConfig";
 
 export default class ViewGraphs extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchParams: [],
-      isModalVisible: false
+      isModalVisible: false,
+      currencies: undefined
     };
+  }
+
+  componentWillMount() {
+    firebase
+      .database()
+      .ref("/coins")
+      .on("value", snapshot => {
+        this.setState({
+          ...this.state,
+          currencies: snapshot.val()
+        });
+      });
   }
 
   updateField(field, newValue) {
@@ -20,9 +35,14 @@ export default class ViewGraphs extends Component {
   }
 
   render() {
+    if (!this.props.userInfo) {
+      return <Redirect to="/" />;
+    }
+
     const graphs = this.state.searchParams.map(param => {
-      return <Graph searchParams={param} />;
+      return <Graph searchParams={param} currencies={this.state.currencies} />;
     });
+
     return (
       <div className="App">
         <h1> CryptoPortal </h1>
@@ -39,11 +59,16 @@ export default class ViewGraphs extends Component {
         <br />
         <br />
 
-        <SearchModal
-          isVisible={this.state.isModalVisible}
-          searchParams={this.state.searchParams}
-          updateParent={(field, newValue) => this.updateField(field, newValue)}
-        />
+        {this.state.currencies && (
+          <SearchModal
+            isVisible={this.state.isModalVisible}
+            searchParams={this.state.searchParams}
+            updateParent={(field, newValue) =>
+              this.updateField(field, newValue)
+            }
+            currencies={this.state.currencies}
+          />
+        )}
         <div style={{ display: "flex", flexWrap: "wrap" }}>{graphs}</div>
       </div>
     );
