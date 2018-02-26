@@ -43,6 +43,7 @@ export default class AddCoin extends Component {
         />
 
         <br />
+        <br />
 
         <p> Coin Abbreviation </p>
         <Input
